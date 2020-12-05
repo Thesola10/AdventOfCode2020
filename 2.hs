@@ -1,8 +1,25 @@
-import Data.List(findIndices)
+import Text.Regex.TDFA
+
+countEls :: Eq a0 => a0 -> ([a0] -> Integer)
+countEls c s = sum [if (el == c) then 1 else 0 | el <- s]
+
+checkPolicy :: (Integer, Integer, Char, String) -> Bool
+checkPolicy (min, max, which, pass) = 
+                    do
+                    let nchar = countEls which pass
+                    (nchar >= min) && (nchar <= max)
+
+countFails :: [(Integer, Integer, Char, String)] -> Integer
+countFails lines = sum [if checkPolicy a then 0 else 1 | a <- lines]
+
+checkPolicy' :: (Integer, Integer, Char, String) -> Bool
+checkPolicy' (i1, i2, which, pass) = 
+             ((pass!!(fromIntegral i1 - 1)) == which) /= ((pass!!(fromIntegral i2 - 1)) == which)
+
+countFails' :: [(Integer, Integer, Char, String)] -> Integer
+countFails' lines = sum [if checkPolicy' a then 1 else 0 | a <- lines]
 
 -----
-
-splitOn a b = splitAt ((findIndices (== a) b)!!0) b
 
 getInputs :: IO [(Integer, Integer, Char, String)]
 getInputs = do
@@ -11,10 +28,13 @@ getInputs = do
             return ns
 
 parseInput :: String -> (Integer, Integer, Char, String)
-parseInput line = do
-                let pol = splitOn ':' line
-                let range = map toInteger (splitOn '-' (words (pol !! 0) !! 0))
-                return (range !! 0, range !! 1, head (words (pol !! 0) !! 0), pol !! 1)
+parseInput line = 
+            do
+            let res = (line =~ "^([0-9]{1,2})-([0-9]{1,2}) ([a-z]): (.+)$" :: [[String]]) !! 0
+            (read (res!!1) :: Integer, read (res!!2) :: Integer, res!!3!!0, res!!4)
 
 main :: IO ()
-main = error "No entry point defined."
+main =  do
+        dat <- getInputs
+        putStrLn $ "Failing passwords: " ++ (show (countFails dat))
+        putStrLn $ "Good passwords (new): " ++ (show (countFails' dat))
