@@ -1,6 +1,7 @@
 scanDiagonal :: Int -> Int -> [String] -> Integer
-scanDiagonal dy dx table = let nthl = [l | (n,l) <- (zip [0..] table), n `mod` dy == 0]
-                        in sum [if tl!!(dx*n `mod` length tl) == '#' then 1 else 0 | (n, tl) <- (zip [0..] nthl)]
+scanDiagonal dy dx table =
+            let nthl = [l | (n,l) <- (zip [0..] table), n `mod` dy == 0]
+            in sum [if tl!!(dx*n `mod` length tl) == '#' then 1 else 0 | (n, tl) <- (zip [0..] nthl)]
 
 -----
 
