@@ -15,8 +15,8 @@ main =  do
         ins <- getInputs
         putStrLn $ "Trees hit: " ++ (show (scanDiagonal 1 3 ins))
         let mulSlopes = (scanDiagonal 1 1 ins)
-                        * (scanDiagonal 1 3 ins)
-                        * (scanDiagonal 1 5 ins)
-                        * (scanDiagonal 1 7 ins)
-                        * (scanDiagonal 2 1 ins)
+                      * (scanDiagonal 1 3 ins)
+                      * (scanDiagonal 1 5 ins)
+                      * (scanDiagonal 1 7 ins)
+                      * (scanDiagonal 2 1 ins)
         putStrLn $ "Product of tested slopes: " ++ (show mulSlopes)
