@@ -3,12 +3,22 @@ import Data.List.Split
 import Data.Maybe
 import Text.Regex.TDFA
 
+--- Ex1: Count how many passports have all required fields
+--
+-- My approach: Walk through a passport's fields for each required field
+-- and make a list of which of these fields are missing. If the list is
+-- empty, then all of our required fields have been found.
 checkFields :: [(String, String)] -> Bool
 checkFields pass =  do
                     let missingKeys = [field | field <- keys, isNothing $ elemIndex field (map fst pass)]
                     length missingKeys == 0
                 where keys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 
+--- Ex2: Count how many passports have correct values in their fields
+--
+-- My approach: We're applying a switch-case style checker (validField) to
+-- each field entry, which uses a different filter to check the field's value
+-- depending on its key.
 checkFields' :: [(String, String)] -> Bool
 checkFields' pass = do
                     let invalidKeys = filter (not . validField) pass

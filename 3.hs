@@ -1,3 +1,9 @@
+--- Exs 1 and 2: Find how many trees will be hit following a given slope
+--
+-- My approach: We only take every nth line from the list, with n the vertical
+-- step given. Following that, all we need is to check that a line has a tree
+-- at (horizontal step * line number), modulus width because repeating pattern.
+
 scanDiagonal :: Int -> Int -> [String] -> Integer
 scanDiagonal dy dx table =
             let nthl = [l | (n,l) <- (zip [0..] table), n `mod` dy == 0]

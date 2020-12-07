@@ -1,3 +1,8 @@
+--- Ex1: Find the largest seat ID.
+--
+-- My approach: Literally treat the steps in the exercise as separate funcs.
+-- We decode our binary-space seat refs into coordinates, and then apply the
+-- seat ID logic to them.
 toSeatId :: (Integer, Integer) -> Integer
 toSeatId (y, x) = (y * 8) + x
 
@@ -13,6 +18,11 @@ bsp (lh, uh) (q:qs) (min, max)
             | q == uh = bsp(lh,uh) qs ((hfwy min max) + 1, max)
             where hfwy m n = (m + n) `div` 2
 
+--- Ex2: Find my seat ID, which is the only missing seat ID in a set range.
+--
+-- My approach: Sort the list, zip it against consecutive values, and find
+-- the first mismatch. If there's a missing ID, the sorted list is guaranteed
+-- to start lagging behind our indexes.
 mySeatId :: [Integer] -> Integer
 mySeatId ids = [a | (a,b) <- (zip sids [sids!!0 ..]), (a /= b)]!!0 - 1
         where sids = qsort ids
