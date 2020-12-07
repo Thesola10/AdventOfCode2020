@@ -1,6 +1,6 @@
-exlDedup :: [Integer] -> [Integer]
-exlDedup [] = []
-exlDedup (x:xs) = x : (filter (/= x) (exlDedup xs))
+dedup :: Eq a => [a] -> [a]
+dedup [] = []
+dedup (x:xs) = x : (filter (/= x) (dedup xs))
 
 --- Ex 1: Find the two expense report elements that add up to 2020
 --
@@ -50,7 +50,7 @@ getInputs = do
 main :: IO ()
 main =  do
         ns <- getInputs
-        let nnn = exlDedup ns
+        let nnn = dedup ns
         let ex1 = exlScan nnn
         let ex2 = exlScan' nnn
         putStrLn $ "Ex1: " ++ (show ex1)
