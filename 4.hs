@@ -26,9 +26,9 @@ checkFields' pass = do
 
 validField :: (String, String) -> Bool
 validField (key, value)
-          | key == "byr"  = (read value :: Integer) <? (1920, 2002)
-          | key == "iyr"  = (read value :: Integer) <? (2010, 2020)
-          | key == "eyr"  = (read value :: Integer) <? (2020, 2030)
+          | key == "byr"  = (read value :: Integer) <=> (1920, 2002)
+          | key == "iyr"  = (read value :: Integer) <=> (2010, 2020)
+          | key == "eyr"  = (read value :: Integer) <=> (2020, 2030)
           | key == "hgt"  = validHeight value
           | key == "hcl"  = value =~ "^#[0-9a-f]{6}$"
           | key == "ecl"  = not (isNothing $ elemIndex value eyeColors)
@@ -39,15 +39,15 @@ validField (key, value)
 validHeight :: String -> Bool
 validHeight entry
           | length fmt == 0   = False
-          | fmt!!0!!2 == "in" = (read (fmt!!0!!1) :: Integer) <? (59, 76)
-          | fmt!!0!!2 == "cm" = (read (fmt!!0!!1) :: Integer) <? (150, 193)
+          | fmt!!0!!2 == "in" = (read (fmt!!0!!1) :: Integer) <=> (59, 76)
+          | fmt!!0!!2 == "cm" = (read (fmt!!0!!1) :: Integer) <=> (150, 193)
           where fmt = entry =~ "^([0-9]+)(in|cm)$" :: [[String]]
 
 -----
 
 -- pretty range function pulled from StackOverflow
-(<?) :: Ord a => a -> (a,a) -> Bool
-(<?) x (min, max) = x >= min && x <= max
+(<=>) :: Ord a => a -> (a,a) -> Bool
+(<=>) x (min, max) = x >= min && x <= max
 
 getInputs :: IO [[(String, String)]]
 getInputs = do
