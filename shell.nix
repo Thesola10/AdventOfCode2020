@@ -1,7 +1,6 @@
-{ nixpkgs ? import <nixpkgs> {}}:
+{ pkgs ? import <nixpkgs> {}}:
 
 let
-  inherit (nixpkgs) pkgs;
   inherit (pkgs) haskellPackages;
   
   haskellDeps = ps: with ps; [
