@@ -25,15 +25,15 @@ bsp (lh, uh) (q:qs) (min, max)
 -- to start lagging behind our indexes.
 mySeatId :: [Integer] -> Integer
 mySeatId ids = [a | (a,b) <- (zip sids [sids!!0 ..]), (a /= b)]!!0 - 1
-        where sids = qsort ids
+               where sids = qsort ids
 
 -----
 
 qsort :: Ord a => [a] -> [a]
 qsort []     = []
 qsort (x:xs) = lower ++ [x] ++ upper
-            where lower = qsort [el | el <- xs, el < x]
-                  upper = qsort [eu | eu <- xs, eu > x]
+               where lower = qsort [el | el <- xs, el < x]
+                     upper = qsort [eu | eu <- xs, eu >= x]
 
 getInputs :: IO [String]
 getInputs = do

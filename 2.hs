@@ -1,6 +1,6 @@
 import Text.Regex.TDFA
 
-countEls :: Eq a0 => a0 -> ([a0] -> Integer)
+countEls :: Eq a => a -> [a] -> Integer
 countEls c s = sum [1 | el <- s, el == c]
 
 --- Ex 1: Count how many passwords fail the first given policy
