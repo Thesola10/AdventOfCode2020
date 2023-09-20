@@ -9,8 +9,12 @@ let
   ];
 
   ghc = haskellPackages.ghcWithPackages haskellDeps;
+
+  pkgs2 = import pkgs.path {
+    overlays = [ (se: su: { inherit ghc; }) ];
+  };
 in
 pkgs.stdenv.mkDerivation {
   name = "haskell";
-  buildInputs = [ ghc ];
+  buildInputs = [ ghc pkgs2.haskell-language-server ];
 }
